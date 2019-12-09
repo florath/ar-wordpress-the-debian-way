@@ -8,12 +8,22 @@
     group: root
     mode: '0644'
 
-- name: "Disable the default apache2 module"
-  apache2_module:
-    state: absent
-    name: 000-default
+- name: "Disable the default apache2 site"
+  shell: a2dissite 000-default
+  args:
+    removes: /etc/apache2/sites-enabled/000-default.conf
+  notify:
+  - restart apache2
 
 - name: "Enable the wordpress apache module"
-  apache2_module:
-    state: present
-    name: wordpress
+  shell: a2ensite wordpress
+  args:
+    creates: /etc/apache2/sites-enabled/wordpress.conf
+  notify:
+    - restart apache2
+
+handlers:
+  - name: "restart apache2"
+    service:
+      name: apache2
+      state: restarted
