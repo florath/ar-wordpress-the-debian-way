@@ -1,0 +1,19 @@
+---
+
+# Install the needed packages
+
+- name: "Install wordpress"
+  apt:
+    name: wordpress
+
+- name: "Install curl"
+  apt:
+    name: curl
+
+- name: "Install apache2"
+  apt:
+    name: apache2
+
+- name: "Install mariadb-server"
+  apt:
+    name: mariadb-server
